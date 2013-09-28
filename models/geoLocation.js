@@ -16,8 +16,10 @@ GeoLocation.prototype.save = function(callback) {
 
   require('mongodb').connect(url, function(err, db) {
     db.collection('geoLocations').insert($this, function(err, docs) {
+      if (callback) {
+        callback();
+      }
       db.close();
-      callback();
     });
   });
 };

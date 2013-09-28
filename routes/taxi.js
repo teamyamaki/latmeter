@@ -15,4 +15,9 @@ exports.create = function(req, res) {
   taxi.save(function() {
     res.redirect('/');
   });
+  
+  if (req.body.latitude && req.body.longitude) {
+    var geoLocation = new GeoLocation(req.body);
+    geoLocation.save();
+  }
 };
