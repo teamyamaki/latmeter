@@ -2,7 +2,7 @@ require('../models/taxi');
 
 exports.index = function(req, res) {
   var taxis = Taxi.find();
-  res.render('taxis/index');
+  res.render('taxis/index', { taxis: taxis });
 };
 
 exports.add = function(req, res) {
