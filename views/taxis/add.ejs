@@ -8,6 +8,7 @@
         <link rel='stylesheet' href='/stylesheets/jquery.mobile-1.3.2.min.css' />
         <script src="/javascripts/jquery-1.10.2.min.js"></script>
         <script src="/javascripts/jquery.mobile-1.3.2.min.js"></script>
+        <script src="/javascripts/latmeter.js"></script>
     </head>
     <body>
         <div data-role="page">
@@ -31,7 +32,7 @@
                   }
                 </script>
 
-                <form action="/taxi" method="POST" onsubmit="setGeoLocation();">
+                <form action="/taxi" method="POST">
                     <input type="hidden" name="latitude" />
                     <input type="hidden" name="longitude" />
                     <legend>
@@ -64,7 +65,7 @@
                 </form>
             </div>
             <div data-role="footer" data-position="fixed">
-                <h4>フッター</h4>
+                <a href="/" data-role="button">戻る</a>
             </div>
         </div>
     </body>
