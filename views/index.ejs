@@ -20,15 +20,15 @@
                         タクシーの色：
                     </legend>
                     <fieldset data-role="controlgroup" data-type="horizontal">
-                        <input type="radio" name="color" id="black" checked="true">
+                        <input type="radio" name="color" id="black" value="black" checked="true">
                         <label for="black">黒</label>
-                        <input type="radio" name="color" id="white" >
+                        <input type="radio" name="color" id="white" value="white">
                         <label for="white">白</label>
-                        <input type="radio" name="color" id="yellow">
+                        <input type="radio" name="color" id="yellow" value="yellow">
                         <label for="yellow">黄色</label>
-                        <input type="radio" name="color" id="orange">
+                        <input type="radio" name="color" id="orange" value="orange">
                         <label for="orange">オレンジ</label>
-                        <input type="radio" name="color" id="etc">
+                        <input type="radio" name="color" id="etc" value="etc">
                         <label for="etc">他</label>
                     </fieldset>
                     <legend>
@@ -42,6 +42,7 @@
                         評価：
                     </legend>
                     <input type="range" name="rating" value="3" min="1" max="5" step="1" >
+                    <input type="submit" value="評価する" />
                 </form>
             </div>
             <div data-role="footer">
