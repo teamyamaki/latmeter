@@ -16,10 +16,17 @@
             </div>
             <div data-role="content">
                 <script>
+                  $(document).ready(function() {
+                    setGeoLocation();
+                    setTimeout(setGeoLocation, 5000);
+                  });
+
                   function setGeoLocation() {
                     navigator.geolocation.getCurrentPosition(function(position) {
-                      $('input:hidden[name="latitude"]').val(position.coords.latitude);
-                      $('input:hidden[name="longitude"]').val(position.coords.longitude);
+                      $('input[name="latitude"]').first().val(position.coords.latitude);
+                      $('input[name="longitude"]').first().val(position.coords.longitude);
+                    },
+                    function() {
                     });
                   }
                 </script>
