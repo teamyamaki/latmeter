@@ -10,6 +10,7 @@ Taxi = function(params) {
   this.color = params.color;
   this.companyType = params.companyType;
   this.rating = params.rating;  
+  this.created_at = new Date();
 };
 
 Taxi.find = function(callback) {
