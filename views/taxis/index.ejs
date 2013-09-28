@@ -15,7 +15,9 @@
                 <h1>結果</h1>
             </div>
             <div data-role="content">
-
+                <% taxis.forEach(function(doc){%>
+                    <li>色：<%= doc.color %>,タイプ：<%= doc.companyType %>評価：<%= doc.rating %></li>
+                <%}) %>
             </div>
             <div data-role="footer">
                 <h4>フッター</h4>

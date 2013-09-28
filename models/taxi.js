@@ -14,9 +14,9 @@ Taxi = function(params) {
 
 Taxi.find = function(callback) {
   require('mongodb').connect(url, function(err, db) {
-    db.collection('taxis').find({}, function(err, docs) {
-      db.close();
+    db.collection('taxis').find().toArray(function(err, docs) {
       callback(docs);
+      db.close();
     });
   });
 };
