@@ -11,11 +11,29 @@
     </head>
     <body>
         <div data-role="page">
-            <div data-role="header">
+            <div data-role="header" data-position="fixed">
                 <h1>タクシーどうだった？</h1>
             </div>
             <div data-role="content">
-                <form action="/taxi" method="POST">
+                <script>
+                  $(document).ready(function() {
+                    setGeoLocation();
+                    setTimeout(setGeoLocation, 5000);
+                  });
+
+                  function setGeoLocation() {
+                    navigator.geolocation.getCurrentPosition(function(position) {
+                      $('input[name="latitude"]').val(position.coords.latitude);
+                      $('input[name="longitude"]').val(position.coords.longitude);
+                    },
+                    function() {
+                    });
+                  }
+                </script>
+
+                <form action="/taxi" method="POST" onsubmit="setGeoLocation();">
+                    <input type="hidden" name="latitude" />
+                    <input type="hidden" name="longitude" />
                     <legend>
                         タクシーの色：
                     </legend>
@@ -42,10 +60,10 @@
                         評価：
                     </legend>
                     <input type="range" name="rating" value="3" min="1" max="5" step="1" >
-                    <input type="submit" value="評価する" />
+                    <input type="submit" data-icon="star" value="評価する" />
                 </form>
             </div>
-            <div data-role="footer">
+            <div data-role="footer" data-position="fixed">
                 <h4>フッター</h4>
             </div>
         </div>
