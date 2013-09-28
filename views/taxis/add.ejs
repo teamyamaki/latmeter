@@ -30,6 +30,32 @@
                     function() {
                     });
                   }
+                  
+                  function setComment(){
+                      var rating = $('input[name=rating]').val();
+                      var ratingComment;
+                      switch(rating){
+                          case "1":
+                          ratingComment = "二度と乗りたくない";
+                          break;
+                          case "2":
+                          ratingComment = "できれば乗りたくない";
+                          break;
+                          case "3":
+                          ratingComment = "どっちでもいい";
+                          break;
+                          case "4":
+                          ratingComment = "たまたま走ってたら乗りたい";
+                          break;
+                          case "5":
+                          ratingComment = "毎回乗りたい";
+                          break;
+                          default:
+                          ratingComment = "どっちでもいい";
+                          break;
+                      }
+                      $('#ratingComment').text(ratingComment);
+                  }
                 </script>
 
                 <form action="/taxi" method="POST">
@@ -60,7 +86,8 @@
                     <legend>
                         評価：
                     </legend>
-                    <input type="range" name="rating" value="3" min="1" max="5" step="1" >
+                    <input type="range" name="rating" value="3" min="1" max="5" step="1" onChange="setComment()">
+                    <div name="ratingComment" id="ratingComment">aaa</div>
                     <input type="submit" data-icon="star" value="評価する" />
                 </form>
             </div>
