@@ -6,6 +6,7 @@
 var express = require('express');
 var routes = require('./routes');
 var taxi = require('./routes/taxi');
+var geoLocation = require('./routes/geoLocation');
 var user = require('./routes/user');
 var http = require('http');
 var path = require('path');
@@ -35,6 +36,8 @@ app.get('/', routes.index);
 app.get('/taxi', taxi.index);
 app.get('/taxi/add', taxi.add);
 app.post('/taxi', taxi.create);
+app.get('/geoLocation', geoLocation.index);
+app.post('/geoLocation', geoLocation.create);
 app.get('/users', user.list);
 
 http.createServer(app).listen(app.get('port'), function(){
