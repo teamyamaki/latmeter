@@ -1,0 +1,4 @@
+---
+applications:
+- name: latmeter
+  command: node app.js
