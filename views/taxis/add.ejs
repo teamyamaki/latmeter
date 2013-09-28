@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>タクシーどうだった？</title>
+        <link rel='stylesheet' href='/stylesheets/style.css' />
+        <link rel='stylesheet' href='/stylesheets/jquery.mobile-1.3.2.min.css' />
+        <script src="/javascripts/jquery-1.10.2.min.js"></script>
+        <script src="/javascripts/jquery.mobile-1.3.2.min.js"></script>
+    </head>
+    <body>
+        <div data-role="page">
+            <div data-role="header">
+                <h1>タクシーどうだった？</h1>
+            </div>
+            <div data-role="content">
+                <form action="/taxi" method="POST">
+                    <legend>
+                        タクシーの色：
+                    </legend>
+                    <fieldset data-role="controlgroup"  data-mini="true" data-type="horizontal">
+                        <input type="radio" name="color" id="black" value="black" checked="true">
+                        <label for="black">黒</label>
+                        <input type="radio" name="color" id="white" value="white">
+                        <label for="white">白</label>
+                        <input type="radio" name="color" id="yellow" value="yellow">
+                        <label for="yellow">黄色</label>
+                        <input type="radio" name="color" id="orange" value="orange">
+                        <label for="orange">オレンジ</label>
+                        <input type="radio" name="color" id="etc" value="etc">
+                        <label for="etc">他</label>
+                    </fieldset>
+                    <legend>
+                        タイプ：
+                    </legend>
+                    <select name="companyType" data-role="slider">
+                        <option value="0">民間</option>
+                        <option value="1">個人</option>
+                    </select>
+                    <legend>
+                        評価：
+                    </legend>
+                    <input type="range" name="rating" value="3" min="1" max="5" step="1" >
+                    <input type="submit" value="評価する" />
+                </form>
+            </div>
+            <div data-role="footer">
+                <h4>フッター</h4>
+            </div>
+        </div>
+    </body>
+</html>
