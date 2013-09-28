@@ -1,8 +1,8 @@
 require('../models/taxi');
 
 exports.index = function(req, res) {
-  Taxi.find(function() {
-    res.render('taxis/index', { taxis: taxis });
+  Taxi.find(function(docs) {
+    res.render('taxis/index', { taxis: docs });
   });
 };
 
