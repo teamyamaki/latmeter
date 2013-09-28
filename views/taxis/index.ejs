@@ -15,9 +15,32 @@
                 <h1>結果</h1>
             </div>
             <div data-role="content">
-                <% taxis.forEach(function(doc){%>
-                    <li>色：<%= doc.color %>,タイプ：<%= doc.companyType %>評価：<%= doc.rating %></li>
-                <%}) %>
+                <div class="ui-grid-b">
+                    <div class="ui-block-a">
+                        色
+                    </div>
+                    <div class="ui-block-b">
+                        タイプ
+                    </div>
+                    <div class="ui-block-c">
+                        評価
+                    </div>
+                    <% taxis.forEach(function(doc){%>
+                    <div class="ui-block-a">
+                        <% if(doc.color == 'black'){%>黒
+                        <% }else if(doc.color == 'white'){%>白
+                        <% }else if(doc.color == 'yellow'){%>黄色
+                        <% }else if(doc.color == 'orange'){%>オレンジ
+                        <%}else{%>その他<%} %>
+                    </div>
+                    <div class="ui-block-b">
+                        <% if(doc.companyType == 1){%>個人<% }else{%>民間<%} %>
+                    </div>
+                    <div class="ui-block-c">
+                        <%= doc.rating %>
+                    </div>
+                    <%}) %>
+                </div>
             </div>
             <div data-role="footer">
                 <h4>フッター</h4>
