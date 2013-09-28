@@ -23,8 +23,8 @@
 
                   function setGeoLocation() {
                     navigator.geolocation.getCurrentPosition(function(position) {
-                      $('input[name="latitude"]').first().val(position.coords.latitude);
-                      $('input[name="longitude"]').first().val(position.coords.longitude);
+                      $('input[name="latitude"]').val(position.coords.latitude);
+                      $('input[name="longitude"]').val(position.coords.longitude);
                     },
                     function() {
                     });
