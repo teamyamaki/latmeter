@@ -1,10 +1,4 @@
-// DB接続情報
-if (process.env.VCAP_SERVICES) {
-  var env = JSON.parse(process.env.VCAP_SERVICES);
-  var url = env['mongolab-n/a'][0]['credentials']['uri'];
-} else {
-  var url = 'mongodb://127.0.0.1:27017/latmeter';
-}
+require('../config/database.js');
 
 Taxi = function(params) {
   this.color = params.color;
@@ -14,7 +8,7 @@ Taxi = function(params) {
 };
 
 Taxi.find = function(callback) {
-  require('mongodb').connect(url, function(err, db) {
+  require('mongodb').connect(DATABASE_URL, function(err, db) {
     db.collection('taxis').find({'rating': {$ne: null}}).toArray(function(err, docs) {
       callback(docs);
       db.close();
@@ -25,7 +19,7 @@ Taxi.find = function(callback) {
 Taxi.prototype.save = function(callback) {
   var $this = this;
 
-  require('mongodb').connect(url, function(err, db) {
+  require('mongodb').connect(DATABASE_URL, function(err, db) {
     db.collection('taxis').insert($this, function(err, docs) {
       db.close();
       callback();
