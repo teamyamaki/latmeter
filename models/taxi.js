@@ -12,6 +12,15 @@ Taxi = function(params) {
   this.rating = params.rating;  
 };
 
+Taxi.find = function(callback) {
+  require('mongodb').connect(url, function(err, db) {
+    db.collection('taxis').find({}, function(err, docs) {
+      db.close();
+      callback();
+    });
+  });
+};
+
 Taxi.prototype.save = function(callback) {
   var $this = this;
 

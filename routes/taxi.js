@@ -1,15 +1,16 @@
 require('../models/taxi');
 
 exports.index = function(req, res) {
-  taxi = new Taxi(req.query);
-  console.log(req.query);
-  taxi.save(function() {
-    res.redirect('/');
-  });
+  var taxis = Taxi.find();
+  res.render('taxis/index');
+};
+
+exports.add = function(req, res) {
+  res.render('taxis/add');
 };
 
 exports.create = function(req, res) {
-  taxi = new Taxi(req.body);
+  var taxi = new Taxi(req.body);
   taxi.save(function() {
     res.redirect('/');
   });

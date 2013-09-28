@@ -33,6 +33,7 @@ if ('development' == app.get('env')) {
 
 app.get('/', routes.index);
 app.get('/taxi', taxi.index);
+app.get('/taxi/add', taxi.add);
 app.post('/taxi', taxi.create);
 app.get('/users', user.list);
 
