@@ -40,14 +40,38 @@ GeoLocation.prototype.save = function(callback) {
     console.log("=■======:GeoLocation.save" + " start");
 
   var $this = this;
+  
+  getLocationName(function(locationName) {
+    $this.locationName = locationName;
 
-  require('mongodb').connect(DATABASE_URL, function(err, db) {
-    db.collection('geoLocations').insert($this, function(err, docs) {
-      if (callback) {
-        callback();
-      }
-      db.close();
+
+    require('mongodb').connect(DATABASE_URL, function(err, db) {
+      db.collection('geoLocations').insert($this, function(err, docs) {
+        if (callback) {
+          callback();
+        }
+        db.close();
+      });
     });
+  });
+
+};
+
+function getLocationName(callback) {
+    var geocoder = require('geocoder');
+  // 逆ジオコーディング(座標から住所を得る)
+  geocoder.reverseGeocode(35.6480801, 139.7416143, function ( err, data ) {
+    // アドレス情報の先頭だけしゅとく
+      var address_components = data.results;
+      console.log("■１ = " + address_components);
+    var address_component = address_components[0];  
+      console.log("■２" + address_component);
+      var name = address_component.formatted_address;
+      console.log("■３" + name);
+      
+      if (callback) {
+        callback(name);
+      }
   });
 };
 
