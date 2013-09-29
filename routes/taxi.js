@@ -18,7 +18,7 @@ exports.create = function(req, res) {
   });
 
   if (req.body.latitude && req.body.longitude) {
-    cosole.log('位置情報を保存');
+    console.log('位置情報を保存');
     var geoLocation = new GeoLocation(req.body);
     geoLocation.save();
   }
