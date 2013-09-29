@@ -15,7 +15,11 @@ Taxi.find = function(callback) {
       'ridingId': {$ne: null},
     };
     
-    db.collection('taxis').find(query).toArray(function(err, docs) {
+    var options = {
+      'sort': {'createdAt': -1}
+    };
+
+    db.collection('taxis').find(query, options).toArray(function(err, docs) {
       var taxis = [];
       for (var i = 0; i < docs.length; i ++) {
         taxis[i] = new Taxi(docs[i]);
