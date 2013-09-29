@@ -71,10 +71,13 @@ GeoLocation.findByRidingId = function(ridingId, callback) {
 		// ridingIdを条件に設定
 		var query = {
 			'ridingId': ridingId
-	    };    
+    };
 	    
+    var options = {
+      'sort': {'createdAt': 1}
+    };
 	    // 検索
-        db.collection('geoLocations').find(query).toArray(function(err, docs) {
+        db.collection('geoLocations').find(query, options).toArray(function(err, docs) {
           var geoLocations = [];
           for (var i = 0; i < docs.length; i ++) {
             geoLocations[i] = new GeoLocation(docs[i]);

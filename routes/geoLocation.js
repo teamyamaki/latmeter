@@ -1,7 +1,13 @@
 require('../models/geoLocation');
 
 exports.index = function(req, res) {
-	res.render('geoLocation/index');
+  var ridingId = req.query.ridingId;
+  if (ridingId) {
+    GeoLocation.findByRidingId(ridingId, function(geoLocations) {
+      console.log("経路情報： " + geoLocations.length + "件");
+      res.render('geoLocation/index', {geoLocations: geoLocations});
+    });
+  }
 };
 
 exports.create = function(req, res) {

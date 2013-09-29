@@ -81,6 +81,8 @@ Taxi.prototype.hasRoute = function() {
     return false;
   }
   
+  return true;
+  
   // 2経路以上もっているか？
   GeoLocation.findByRidingId(this.ridingId, function(routs) {
   	console.log("=■======:Taxi.prototype.hasRoute2 " +  routs.length);

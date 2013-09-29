@@ -9,7 +9,8 @@ exports.index = function(req, res) {
 exports.add = function(req, res) {
   var ridingId = req.query.ridingId;
   if (!ridingId) {
-    ridingId = new Date();
+    var strftime = require('strftime');
+    ridingId = strftime('%Y/%m/%d %H:%M',　new Date());
   }
 
   res.render('taxis/add', { ridingId: ridingId });
