@@ -90,31 +90,30 @@
             </div>
             <div data-role="content">
                 <div id="chart_div"></div>
-                <div class="ui-grid-b">
-                    <div class="ui-block-a">
-                        色
-                    </div>
-                    <div class="ui-block-b">
-                        タイプ
-                    </div>
-                    <div class="ui-block-c">
-                        評価
-                    </div>
+                <div class="ui-grid-d">
+                    <div class="ui-block-a">乗車日時</div>
+                    <div class="ui-block-b">色</div>
+                    <div class="ui-block-c">タイプ</div>
+                    <div class="ui-block-d">評価</div>
+                    <div class="ui-block-e">経路</div>
+
                     <% taxis.forEach(function(doc){%>
-                    <div class="ui-block-a">
-                        <% if(doc.color == 'black'){%>黒
-                        <% }else if(doc.color == 'white'){%>白
-                        <% }else if(doc.color == 'yellow'){%>黄色
-                        <% }else if(doc.color == 'orange'){%>オレンジ
-                        <%}else{%>その他<%} %>
-                    </div>
-                    <div class="ui-block-b">
-                        <% if(doc.companyType == 1){%>個人<% }else{%>民間<%} %>
-                    </div>
-                    <div class="ui-block-c">
-                        <%= doc.rating %>
-                    </div>
-                    <%}) %>
+                      <div class="ui-block-a">
+                        <%= doc.createdAtString('不明') %>
+                      </div>
+                      <div class="ui-block-b">
+                        <%= doc.colorName() %>
+                      </div>
+                      <div class="ui-block-c">
+                          <%= doc.companyTypeName() %>
+                      </div>
+                      <div class="ui-block-d">
+                          <%= doc.rating %>
+                      </div>
+                      <div class="ui-block-e">
+                          <a href="/geoLocation?ridingId=<%= doc.ridingId %>">地図</a>
+                      </div>
+                    <% }) %>
                 </div>
             </div>
             <div data-role="footer" data-position="fixed">

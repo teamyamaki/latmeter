@@ -5,13 +5,22 @@ Taxi = function(params) {
   this.companyType = params.companyType;
   this.rating = params.rating;
   this.ridingId = params.ridingId;
-  this.created_at = new Date();
+  this.createdAt = params.createdAt;
 };
 
 Taxi.find = function(callback) {
   require('mongodb').connect(DATABASE_URL, function(err, db) {
-    db.collection('taxis').find({'rating': {$ne: null}}).toArray(function(err, docs) {
-      callback(docs);
+    var query = {
+      'rating': {$ne: null},
+      'ridingId': {$ne: null},
+    };
+    
+    db.collection('taxis').find(query).toArray(function(err, docs) {
+      var taxis = [];
+      for (var i = 0; i < docs.length; i ++) {
+        taxis[i] = new Taxi(docs[i]);
+      }
+      callback(taxis);
       db.close();
     });
   });
@@ -26,4 +35,35 @@ Taxi.prototype.save = function(callback) {
       callback();
     });
   });
+};
+
+Taxi.prototype.createdAtString = function(defaultValue) {
+  if (this.createdAt) {
+    var strftime = require('strftime');
+    return strftime('%Y/%m/%d %H:%M',　this.createdAt);
+  } else {
+    return defaultValue;
+  }
+};
+
+Taxi.prototype.colorName = function() {
+  if(this.color == 'black') {
+    return '黒';
+  }else if(this.color == 'white'){
+    return '白';
+  }else if(this.color == 'yellow'){
+    return '黄色';
+  }else if(this.color == 'orange'){
+    return 'オレンジ';
+  }else{
+    return 'その他';
+  }
+};
+
+Taxi.prototype.companyTypeName = function() {
+  if (this.companyType == 1){
+    return '個人';
+  }else{
+    return '民間';
+  }
 };

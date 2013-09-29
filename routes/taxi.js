@@ -13,6 +13,7 @@ exports.add = function(req, res) {
 exports.create = function(req, res) {
 
   var taxi = new Taxi(req.body);
+  taxi.createdAt = new Date();
   taxi.save(function() {
     res.redirect('/');
   });
