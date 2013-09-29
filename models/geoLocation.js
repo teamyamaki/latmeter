@@ -7,7 +7,7 @@ GeoLocation = function(params) {
 	// ロケーションにプロパティを設定
 	this.latitude  = params.latitude;
 	this.longitude = params.longitude;
-//	this.ridingId  = params.ridingID;
+//	this.ridingId  = params.ridingId;
 	this.ridingId  = "abcdefg";
   
 	// ロケーショに情報から位置名を取得
@@ -75,13 +75,29 @@ function getLocationName(callback) {
   });
 };
 
-GeoLocation.findByRidingID = function(callback) {
+// ridingIdを指定してデータを取得します（複数件）
+GeoLocation.findByRidingId = function(params, callback) {
     console.log("=■======:GeoLocation.findByRidingID" + " start");
 
+	// リクエストパラメータからridingID取得
+	var ridingId = params.ridingId;
+	
 	require('mongodb').connect(DATABASE_URL, function(err, db) {
-    	db.collection('geoLocations').find({'geoLocations.ridingId': 'aaaa'}, function(err, docs) {
-			db.close();
-			callback(docs);
+		console.log("=■======:GeoLocation.findByRidingID1 " +  ridingId);
+		
+		// ridingIdを条件に設定
+		var query = {
+			'ridingId': ridingId
+	    };    
+	    
+	    // 検索
+        db.collection('geoLocations').find(query).toArray(function(err, docs) {
+          var geoLocations = [];
+          for (var i = 0; i < docs.length; i ++) {
+            geoLocations[i] = new GeoLocation(docs[i]);
+          }
+          callback(geoLocations);
+          db.close();
 		});
 	});
 };

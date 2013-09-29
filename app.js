@@ -39,6 +39,7 @@ app.post('/taxi', taxi.create);
 app.get('/geoLocation', geoLocation.index);
 app.post('/geoLocation', geoLocation.create);
 app.get('/users', user.list);
+app.get('/geoLocation/mp', geoLocation.mp);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));

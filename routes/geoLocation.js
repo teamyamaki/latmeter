@@ -10,3 +10,17 @@ exports.create = function(req, res) {
     res.redirect('/');
   });
 };
+  
+exports.mp = function(req, res) {
+    console.log("=■======:exports.map " + req.query	);
+    
+    　	for (key in req.query) {
+	    console.log(key + ":" + req.query[key]);
+　	}
+//	geoLocation = new GeoLocation(req.query);
+  	GeoLocation.findByRidingId(req.query, function(docs) {
+		// 位置情報のリストが返却されるはず
+		// TODO
+		console.log(docs.length);
+  	});
+};
