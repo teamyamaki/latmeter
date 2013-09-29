@@ -3,7 +3,8 @@ require('../config/database.js');
 Taxi = function(params) {
   this.color = params.color;
   this.companyType = params.companyType;
-  this.rating = params.rating;  
+  this.rating = params.rating;
+  this.ridingId = params.ridingId;
   this.created_at = new Date();
   
   	var geocoder = require('geocoder');
