@@ -23,11 +23,6 @@
             // draws it.
             function drawChart() {
                 <%
-                var black_cnt = 0;
-                var white_cnt = 0;
-                var yellow_cnt = 0;
-                var orange_cnt = 0;
-                var etc_cnt = 0;
                 var black = ['黒', 0];
                 var white = ['白', 0];
                 var yellow = ['黄色', 0];
@@ -90,6 +85,7 @@
             </div>
             <div data-role="content">
                 <div id="chart_div"></div>
+                <input type="button" value="表示" data-mini="true" onClick="location.reload(true)">
                 <div class="ui-grid-d">
                     <div class="ui-block-a">乗車日時</div>
                     <div class="ui-block-b">色</div>
