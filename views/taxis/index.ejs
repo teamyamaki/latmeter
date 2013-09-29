@@ -111,7 +111,9 @@
                           <%= doc.rating %>
                       </div>
                       <div class="ui-block-e">
+                        <% if (doc.hasRoute()) { %>
                           <a href="/geoLocation?ridingId=<%= doc.ridingId %>">地図</a>
+                          <% } %>
                       </div>
                     <% }) %>
                 </div>

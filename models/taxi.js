@@ -67,3 +67,12 @@ Taxi.prototype.companyTypeName = function() {
     return '民間';
   }
 };
+
+// 経路を持っているか
+Taxi.prototype.hasRoute = function() {
+  if (!this.ridingId) {
+    return false;
+  }
+  
+  return true;
+};
