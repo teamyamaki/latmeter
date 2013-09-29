@@ -2,11 +2,13 @@ require('../config/database.js');
 	
 // ロケーションを生成
 GeoLocation = function(params) {
+    console.log("=■======:GeoLocation constructor" + " start");
 	
 	// ロケーションにプロパティを設定
 	this.latitude  = params.latitude;
 	this.longitude = params.longitude;
-	this.ridingId  = params.ridingID;
+//	this.ridingId  = params.ridingID;
+	this.ridingId  = "abcdefg";
   
 	// ロケーショに情報から位置名を取得
   	var geocoder = require('geocoder');
@@ -24,7 +26,9 @@ GeoLocation = function(params) {
 };
 
 GeoLocation.find = function(callback) {
-  require('mongodb').connect(DATABASE_URL, function(err, db) {
+    console.log("=■======:GeoLocation.find" + " start");
+    
+	require('mongodb').connect(DATABASE_URL, function(err, db) {
     db.collection('geoLocations').find({}, function(err, docs) {
       db.close();
       callback(docs);
@@ -33,6 +37,8 @@ GeoLocation.find = function(callback) {
 };
 
 GeoLocation.prototype.save = function(callback) {
+    console.log("=■======:GeoLocation.save" + " start");
+
   var $this = this;
 
   require('mongodb').connect(DATABASE_URL, function(err, db) {
@@ -43,6 +49,17 @@ GeoLocation.prototype.save = function(callback) {
       db.close();
     });
   });
+};
+
+GeoLocation.findByRidingID = function(callback) {
+    console.log("=■======:GeoLocation.findByRidingID" + " start");
+
+	require('mongodb').connect(DATABASE_URL, function(err, db) {
+    	db.collection('geoLocations').find({'geoLocations.ridingId': 'aaaa'}, function(err, docs) {
+			db.close();
+			callback(docs);
+		});
+	});
 };
 
 function getLocationNames () {
