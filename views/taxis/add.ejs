@@ -18,7 +18,7 @@
                 <form action="/taxi" method="POST">
                     <input type="hidden" name="latitude" />
                     <input type="hidden" name="longitude" />
-                    <input id="ridingId" type="hidden" value=""/>
+                    <input type="hidden" name="ridingId" />
                     <legend>
                         タクシーの色：
                     </legend>
@@ -80,7 +80,7 @@ $('#taxiAdd').bind('pageinit', function(){
 
 $('#taxiAdd').bind('pageshow', function(){
 		if(GetQueryStringParams('ridingId')){
-			$('#ridingId').val(GetQueryStringParams('ridingId')) ;
+			$('input[name="ridingId"]').val(GetQueryStringParams('ridingId')) ;
 		}
 });
 

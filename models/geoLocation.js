@@ -4,28 +4,9 @@ require('../config/database.js');
 GeoLocation = function(params) {
     console.log("=■======:GeoLocation constructor" + " start");
 	
-	// ロケーションにプロパティを設定
-	this.latitude  = params.latitude;
-	this.longitude = params.longitude;
-	this.ridingId  = params.ridingId;
-//	this.ridingId  = "abcdefg";
-  
-	// ロケーショに情報から位置名を取得
-  	var geocoder = require('geocoder');
-	geocoder.reverseGeocode(this.latitude, this.longitude, function ( err, data ) {
-	
-		// いろいろ返却されるけど先頭だけ取得
-	    var address_components = data.results;
-	    console.log("■１ = " + address_components);
-		var address_component = address_components[0];	
-	    console.log("■２" + address_component);
-	    var name = address_component.formatted_address;
-	    console.log("■３" + name);
-	    this.locationName = name;
-	});
   	// ロケーションにプロパティを設定
-  	this.latitude  = params.latitude;
-  	this.longitude = params.longitude;
+  	this.latitude  = params.latitude || 35.6480801;
+  	this.longitude = params.longitude || 139.7416143;
   	this.ridingId  = params.ridingId;
   	this.createdAt = params.createdAt;
 };
@@ -46,7 +27,7 @@ GeoLocation.prototype.save = function(callback) {
 
   var $this = this;
   
-  getLocationName(function(locationName) {
+  GeoLocation.getLocationName(function(locationName) {
     $this.locationName = locationName;
 
 
@@ -62,7 +43,7 @@ GeoLocation.prototype.save = function(callback) {
 
 };
 
-function getLocationName(callback) {
+GeoLocation.getLocationName = function(callback) {
     var geocoder = require('geocoder');
   // 逆ジオコーディング(座標から住所を得る)
   geocoder.reverseGeocode(35.6480801, 139.7416143, function ( err, data ) {
@@ -81,12 +62,9 @@ function getLocationName(callback) {
 };
 
 // ridingIdを指定してデータを取得します（複数件）
-GeoLocation.findByRidingId = function(params, callback) {
+GeoLocation.findByRidingId = function(ridingId, callback) {
     console.log("=■======:GeoLocation.findByRidingID" + " start");
 
-	// リクエストパラメータからridingID取得
-	var ridingId = params.ridingId;
-	
 	require('mongodb').connect(DATABASE_URL, function(err, db) {
 		console.log("=■======:GeoLocation.findByRidingID1 " +  ridingId);
 		

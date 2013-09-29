@@ -21,6 +21,7 @@ Taxi.find = function(callback) {
 
     db.collection('taxis').find(query, options).toArray(function(err, docs) {
       var taxis = [];
+      
       for (var i = 0; i < docs.length; i ++) {
         taxis[i] = new Taxi(docs[i]);
       }
@@ -74,9 +75,20 @@ Taxi.prototype.companyTypeName = function() {
 
 // 経路を持っているか
 Taxi.prototype.hasRoute = function() {
+  console.log("=■======:Taxi.prototype.hasRoute1 " +  this.ridingId);
+
   if (!this.ridingId) {
     return false;
   }
   
-  return true;
+  // 2経路以上もっているか？
+  GeoLocation.findByRidingId(this.ridingId, function(routs) {
+  	console.log("=■======:Taxi.prototype.hasRoute2 " +  routs.length);
+  	
+  	if (routs.length > 1) {
+  		return true;
+  	}
+  });
+  
+  return false;
 };
