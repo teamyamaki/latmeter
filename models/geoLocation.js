@@ -81,12 +81,9 @@ function getLocationName(callback) {
 };
 
 // ridingIdを指定してデータを取得します（複数件）
-GeoLocation.findByRidingId = function(params, callback) {
+GeoLocation.findByRidingId = function(ridingId, callback) {
     console.log("=■======:GeoLocation.findByRidingID" + " start");
 
-	// リクエストパラメータからridingID取得
-	var ridingId = params.ridingId;
-	
 	require('mongodb').connect(DATABASE_URL, function(err, db) {
 		console.log("=■======:GeoLocation.findByRidingID1 " +  ridingId);
 		
