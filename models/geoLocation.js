@@ -7,8 +7,8 @@ GeoLocation = function(params) {
 	// ロケーションにプロパティを設定
 	this.latitude  = params.latitude;
 	this.longitude = params.longitude;
-//	this.ridingId  = params.ridingId;
-	this.ridingId  = "abcdefg";
+	this.ridingId  = params.ridingId;
+//	this.ridingId  = "abcdefg";
   
 	// ロケーショに情報から位置名を取得
   	var geocoder = require('geocoder');
@@ -23,6 +23,11 @@ GeoLocation = function(params) {
 	    console.log("■３" + name);
 	    this.locationName = name;
 	});
+  	// ロケーションにプロパティを設定
+  	this.latitude  = params.latitude;
+  	this.longitude = params.longitude;
+  	this.ridingId  = params.ridingId;
+  	this.createdAt = params.createdAt;
 };
 
 GeoLocation.find = function(callback) {
