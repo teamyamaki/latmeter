@@ -34,12 +34,27 @@ Taxi.find = function(callback) {
 Taxi.prototype.save = function(callback) {
 	var $this = this;
 
-  require('mongodb').connect(DATABASE_URL, function(err, db) {
-    db.collection('taxis').insert($this, function(err, docs) {
-      db.close();
-      callback();
+  if ($this.ridingId) {
+    GeoLocation.findByRidingId($this.ridingId, function(geoLocations) {
+      $this.hasRoute = geoLocations.length >= 2;
+
+      require('mongodb').connect(DATABASE_URL, function(err, db) {
+        db.collection('taxis').insert($this, function(err, docs) {
+          db.close();
+          callback();
+        });
+      });
     });
-  });
+  } else {
+    $this.hasRoute = false;
+
+    require('mongodb').connect(DATABASE_URL, function(err, db) {
+      db.collection('taxis').insert($this, function(err, docs) {
+        db.close();
+        callback();
+      });
+    });
+  }
 };
 
 Taxi.prototype.createdAtString = function(defaultValue) {
@@ -71,26 +86,4 @@ Taxi.prototype.companyTypeName = function() {
   }else{
     return '民間';
   }
-};
-
-// 経路を持っているか
-Taxi.prototype.hasRoute = function() {
-  console.log("=■======:Taxi.prototype.hasRoute1 " +  this.ridingId);
-
-  if (!this.ridingId) {
-    return false;
-  }
-  
-  return true;
-  
-  // 2経路以上もっているか？
-  GeoLocation.findByRidingId(this.ridingId, function(routs) {
-  	console.log("=■======:Taxi.prototype.hasRoute2 " +  routs.length);
-  	
-  	if (routs.length > 1) {
-  		return true;
-  	}
-  });
-  
-  return false;
 };
