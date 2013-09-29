@@ -4,25 +4,11 @@ require('../config/database.js');
 GeoLocation = function(params) {
     console.log("=■======:GeoLocation constructor" + " start");
 	
-	// ロケーションにプロパティを設定
-	this.latitude  = params.latitude;
-	this.longitude = params.longitude;
-//	this.ridingId  = params.ridingID;
-	this.ridingId  = "abcdefg";
-  
-	// ロケーショに情報から位置名を取得
-  	var geocoder = require('geocoder');
-	geocoder.reverseGeocode(this.latitude, this.longitude, function ( err, data ) {
-	
-		// いろいろ返却されるけど先頭だけ取得
-	    var address_components = data.results;
-	    console.log("■１ = " + address_components);
-		var address_component = address_components[0];	
-	    console.log("■２" + address_component);
-	    var name = address_component.formatted_address;
-	    console.log("■３" + name);
-	    this.locationName = name;
-	});
+  	// ロケーションにプロパティを設定
+  	this.latitude  = params.latitude;
+  	this.longitude = params.longitude;
+  	this.ridingId  = params.ridingId;
+  	this.createdAt = params.createdAt;
 };
 
 GeoLocation.find = function(callback) {

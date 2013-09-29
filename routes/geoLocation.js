@@ -6,6 +6,7 @@ exports.index = function(req, res) {
 
 exports.create = function(req, res) {
   geoLocation = new GeoLocation(req.body);
+  geoLocation.createdAt = new Date();
   geoLocation.save(function() {
     res.redirect('/');
   });
