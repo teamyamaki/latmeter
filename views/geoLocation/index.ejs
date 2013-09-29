@@ -8,43 +8,92 @@
 <link rel='stylesheet' href='/stylesheets/jquery.mobile-1.3.2.min.css' />
 <script src="/javascripts/jquery-1.10.2.min.js"></script>
 <script src="/javascripts/jquery.mobile-1.3.2.min.js"></script>
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+
+<style>
+#map {
+	width: 100%;
+	height: 300px;
+	border: solid 1px #ccc;
+}
+</style>
+</head>
+<body>
+<div id="geoLocationIndex" data-role="page">
+
+<div data-role="header" data-position="fixed">
+<h1>位置情報</h1>
+</div>
+
+<div data-role="content">
+
+<div id="map"></div>
+<div id="latitude"></div>
+<div id="longitude"></div>
+<div id="accuracy"></div>
+<div id="timestamp"></div>
+<div id="elapsedTime">経過時間：----</div>
+
+<input id="ridingId" type="text" value="aa"/>
+
+<input id="RecordLocation" type="Button" Value="タクシー乗車"/>
+
+</div>
+
+<div data-role="footer" data-position="fixed">
+  <a href="/" data-rel="back">戻る</a>
+</div>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script> 
 <script>
-// 監視識別ID
-var watch_id = 0;
-var startDateTime;
-
-$(document).ready( function() {
-
+$('#geoLocationIndex').bind('pageinit',   function() {
 	$("#RecordLocation").bind("click", function(){
-
 		if( watch_id > 0 ) {
 			window.navigator.geolocation.clearWatch(watch_id);
 			watch_id = 0;
-			$('#RecordLocation').prop('value','記録開始').button("refresh");
+			$('#RecordLocation').prop('value','タクシー乗車').button("refresh");
 			
 			startDateTime = null;
 			$('#elapsedTime').html('経過時間ミリ秒:----')
 			
+			goTaxiReview();
+			
 		}else{
-			watch_id = navigator.geolocation.watchPosition(successCallback,errorCallback);
-			$('#RecordLocation').prop('value','記録停止').button("refresh");
+			watch_id = navigator.geolocation.watchPosition(successCallback,errorCallback, option);
+			$('#RecordLocation').prop('value','タクシー降車').button("refresh");
 			
 			startDateTime = $.now();
 			$('#elapsedTime').html('経過時間ミリ秒:'+ ($.now() - startDateTime))
 			
+			$('#ridingId').val($.now()+'@'+latitude+'@'+longitude)
+			
+			
 		}
-	})
-	
+	});
+});
+
+$('#geoLocationIndex').bind('pageshow',   function() {
 	initLocation();
 });
 
+
+//監視識別ID
+var watch_id = 0;
+var startDateTime;
+
+var latitude = 0;
+var longitude = 0;
+
+var option = {
+		enableHighAccuracy:true,
+		timeout:10000,
+		maximumAge:0
+};
+
 function successCallback(event) {
 	// 緯度
-	var latitude = event.coords.latitude;
+	latitude = event.coords.latitude;
 	$('#latitude').html('<span>緯度:'+latitude+'</span>');
 	// 経度
-	var longitude = event.coords.longitude;
+	longitude = event.coords.longitude;
 	$('#longitude').html('<span>経度:'+longitude+'</span>');
 	// 精度
 	var accuracy = event.coords.accuracy;
@@ -76,7 +125,6 @@ function successCallback(event) {
 	$('#elapsedTime').html('経過時間ミリ秒:'+ ($.now() - startDateTime ))
 }
 
-
 function initLocation(){
 
 	//ユーザーの現在の位置情報を取得
@@ -102,34 +150,13 @@ function errorCallback(error) {
 	alert(err_msg);
 }
 
-</script>
-<style>
-#map {
-	width: 100%;
-height: 300px;
-border: solid 1px #ccc;
+function goTaxiReview(){
+	$.mobile.changePage('/taxi/add', { transition:'slide', reverse: false, reloadPage: true, data : 'ridingId=' + $('#ridingId').val() });
 }
-</style>
-</head>
-<body>
-<div data-role="page">
-<div data-role="header" data-position="fixed">
-<h1>位置情報</h1>
-</div>
-<div data-role="content">
-<div id="map"></div>
-<div id="latitude"></div>
-<div id="longitude"></div>
-<div id="accuracy"></div>
-<div id="timestamp"></div>
-<div id="elapsedTime">経過時間：----</div>
-<input id="RecordLocation" type="Button" Value="記録開始"/>
+
+</script>
 
 </div>
 
-<div data-role="footer" data-position="fixed">
-  <a href="/" data-rel="back">戻る</a>
-</div>
-</div>
 </body>
 </html>

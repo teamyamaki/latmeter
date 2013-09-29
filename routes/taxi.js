@@ -13,12 +13,15 @@ exports.add = function(req, res) {
 exports.create = function(req, res) {
 
   var taxi = new Taxi(req.body);
+  taxi.createdAt = new Date();
   taxi.save(function() {
     res.redirect('/');
   });
 
   if (req.body.latitude && req.body.longitude) {
+    console.log('位置情報を保存');
     var geoLocation = new GeoLocation(req.body);
+    geoLocation.createdAt = new Date();
     geoLocation.save();
   }
 };
