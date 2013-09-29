@@ -18,7 +18,7 @@
                 <form action="/taxi" method="POST">
                     <input type="hidden" name="latitude" />
                     <input type="hidden" name="longitude" />
-					<input type="hidden" name="ridingId" />
+                    <input type="hidden" name="ridingId" value="<%= ridingId %>"/>
                     <legend>
                         タクシーの色：
                     </legend>
@@ -50,7 +50,7 @@
                     <input type="range" name="rating" value="3" min="1" max="5" step="1" onChange="setComment()">
                     <br />
                     <br />
-                    <input type="submit" data-icon="star" value="評価する" onclick="alert($('#ridingId').val() + ' ←これをサーバに送ってほしい。')" />
+                    <input type="submit" data-icon="star" value="評価する" />
                 </form>
             </div>
             <div data-role="footer" data-position="fixed">

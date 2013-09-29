@@ -7,7 +7,12 @@ exports.index = function(req, res) {
 };
 
 exports.add = function(req, res) {
-  res.render('taxis/add');
+  var ridingId = req.query.ridingId;
+  if (!ridingId) {
+    ridingId = new Date();
+  }
+
+  res.render('taxis/add', { ridingId: ridingId });
 };
 
 exports.create = function(req, res) {
