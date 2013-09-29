@@ -1,13 +1,18 @@
 require('../config/database.js');
-
-GeoLocation = function(params) {
-  this.latitude = params.latitude;
-  this.longitude = params.longitude;
+	
+	// ロケーションを生成
+	GeoLocation      = function(params) {
+	
+	// ロケーションにプロパティを設定
+	this.latitude  = params.latitude;
+	this.longitude = params.longitude;
+	this.ridingId  = params.ridingID;
   
+	// ロケーショに情報から位置名を取得
   	var geocoder = require('geocoder');
-	// 逆ジオコーディング(座標から住所を得る)
 	geocoder.reverseGeocode(35.6480801, 139.7416143, function ( err, data ) {
-		// アドレス情報の先頭だけしゅとく
+	
+		// いろいろ返却されるけど先頭だけ取得
 	    var address_components = data.results;
 	    console.log("■１ = " + address_components);
 		var address_component = address_components[0];	
