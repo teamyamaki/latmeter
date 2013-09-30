@@ -3,21 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>タクシー評価結果</title>
-        <link rel='stylesheet' href='/stylesheets/style.css' />
-        <link rel='stylesheet' href='/stylesheets/jquery.mobile-1.3.2.min.css' />
-        <script src="/javascripts/jquery-1.10.2.min.js"></script>
-        <script src="/javascripts/jquery.mobile-1.3.2.min.js"></script>
-        <script src="/javascripts/google-chart.js"></script>
-        <script>
-            // Load the Visualization API and the piechart package.
-            google.load('visualization', '1.0', {
-                'packages' : ['corechart']
-            });
-        </script>
+        <% include ../common/_head.ejs %>
     </head>
     <body>
-        <div id="taxis_page" data-role="page">
+        <div id="taxis_page" data-role="page" data-url="/taxi">
             <div data-role="header" data-position="fixed">
                 <h1>結果</h1>
             </div>
@@ -52,11 +41,11 @@
                         data.addColumn('string', 'Topping');
                         data.addColumn('number', 'Slices');
                         data.addRows([
-                        [black[0], black[1]],
-                        [white[0], white[1]],
-                        [yellow[0], yellow[1]],
-                        [orange[0], orange[1]],
-                        [etc[0], etc[1]],
+                        black,
+                        white,
+                        yellow,
+                        orange,
+                        etc,
                         ]);
         
                         // Set chart options
