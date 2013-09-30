@@ -6,6 +6,7 @@ Taxi = function(params) {
   this.rating = params.rating;
   this.ridingId = params.ridingId;
   this.createdAt = params.createdAt;
+  this.hasRoute = params.hasRoute;
 };
 
 Taxi.find = function(options, callback) {
@@ -37,6 +38,7 @@ Taxi.find = function(options, callback) {
 
 Taxi.prototype.save = function(callback) {
 	var $this = this;
+  $this.createdAt = new Date();
 
   if ($this.ridingId) {
     GeoLocation.findByRidingId($this.ridingId, function(geoLocations) {
@@ -50,8 +52,6 @@ Taxi.prototype.save = function(callback) {
       });
     });
   } else {
-    $this.hasRoute = false;
-
     require('mongodb').connect(DATABASE_URL, function(err, db) {
       db.collection('taxis').insert($this, function(err, docs) {
         db.close();
