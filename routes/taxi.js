@@ -1,8 +1,12 @@
 require('../models/taxi');
 
 exports.index = function(req, res) {
-  Taxi.find(function(docs) {
-    res.render('taxis/index', { taxis: docs });
+  Taxi.find({}, function(docs) {
+    var taxis = docs;
+    Taxi.find({rating: '5'}, function(docs) {
+      var goodTaxis = docs;
+      res.render('taxis/index', { taxis: taxis, goodTaxis: goodTaxis });
+    });
   });
 };
 

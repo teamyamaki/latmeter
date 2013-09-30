@@ -8,18 +8,22 @@ Taxi = function(params) {
   this.createdAt = params.createdAt;
 };
 
-Taxi.find = function(callback) {
+Taxi.find = function(options, callback) {
   require('mongodb').connect(DATABASE_URL, function(err, db) {
-    var query = {
-      'rating': {$ne: null},
-      'ridingId': {$ne: null},
-    };
+    var query = {};
+    query.ridingId = {$ne: null};
+
+    if (options.rating) {
+      query.rating = options.rating;
+    } else {
+       query.rating = {$ne: null};
+    }
     
-    var options = {
+    var query_options = {
       'sort': {'createdAt': -1}
     };
 
-    db.collection('taxis').find(query, options).toArray(function(err, docs) {
+    db.collection('taxis').find(query, query_options).toArray(function(err, docs) {
       var taxis = [];
       
       for (var i = 0; i < docs.length; i ++) {
