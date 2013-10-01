@@ -70,13 +70,13 @@ var map;
 var bounds;
 
 var goldStar = {
-		  path: 'M 125,5 155,90 245,90 175,145 200,230 125,180 50,230 75,145 5,90 95,90 z',
-		  fillColor: "yellow",
-		  fillOpacity: 0.8,
-		  scale: 1,
-		  strokeColor: "gold",
-		  strokeWeight: 14
-		};
+		path: 'M 125,5 155,90 245,90 175,145 200,230 125,180 50,230 75,145 5,90 95,90 z',
+		fillColor: "yellow",
+		fillOpacity: 0.8,
+		scale: 1,
+		strokeColor: "gold",
+		strokeWeight: 14
+};
 
 //RidingId生成
 function createRidingId(latitude,longitude)
@@ -88,11 +88,10 @@ function createRidingId(latitude,longitude)
 function initLocation(){
 
 	if(geoLocations != ''){
-		//console.log("geoLocations.length:" + geoLocations.length);
 		displayTrackOnMap(geoLocations);
 	}else{
-	ridingId = "";
-	navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+		ridingId = "";
+		navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
 	}
 }
 
@@ -132,9 +131,10 @@ function errorCallback(error) {
 	alert(err_msg);
 }
 
+//マーカーを追加
 function addMarker(geoloc) {
-	//console.log("latitude : " + geoloc.latitude);
-	//console.log("longitude : " + geoloc.longitude);
+	console.log("latitude : " + geoloc.latitude);
+	console.log("longitude : " + geoloc.longitude);
 
 	marker = new google.maps.Marker({
 		position: new google.maps.LatLng(geoloc.latitude, geoloc.longitude),
@@ -148,15 +148,17 @@ function addMarker(geoloc) {
 
 	var infowindow = new google.maps.InfoWindow({
 	});
-	
-	google.maps.event.addListener(marker, 'click', (function(marker, i) {
-	return function() {
-	infowindow.setContent('<span>'+geoloc.latitude.toString() + '</span>');
-	infowindow.open(map, marker);
-	}
-	})(marker, i));
-	}
 
+	google.maps.event.addListener(marker, 'click', (function(marker, i) {
+		return function() {
+			infowindow.setContent('<span>'+geoloc.latitude.toString() + '</span>');
+			infowindow.open(map, marker);
+		}
+	})(marker, i));
+
+}
+
+//経路を表示
 function displayTrackOnMap(geoLocs){
 
 	if(google.maps.MapTypeId){
@@ -168,43 +170,46 @@ function displayTrackOnMap(geoLocs){
 		bounds = new google.maps.LatLngBounds();
 
 		var coordinates = [];
-		
+
 		for (i = 0; i < geoLocs.length; i++) {
-				addMarker(geoLocs[i]);
-				coordinates[i] =  new google.maps.LatLng(geoLocs[i].latitude, geoLocs[i].longitude);
+			addMarker(geoLocs[i]);
+			coordinates[i] =  new google.maps.LatLng(geoLocs[i].latitude, geoLocs[i].longitude);
 		}
 
 		var lineSymbol = {
-				  path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
-				};
-		
+				path: google.maps.SymbolPath.FORWARD_CLOSED_ARROW
+		};
+
 		var flightPath = new google.maps.Polyline({
-		    path: coordinates,
-		    strokeColor: '#FF0000',
-		    strokeOpacity: 1.0,
-		    strokeWeight: 3,
-		    icons: [{
-		        icon: lineSymbol,
-		        offset: '100%',
-		        repeat:'15%'
-		      }],
-		    map: map
-		  });
-		
-		
-		
+			path: coordinates,
+			strokeColor: '#FF0000',
+			strokeOpacity: 1.0,
+			strokeWeight: 3,
+			icons: [{
+				icon: lineSymbol,
+				offset: '100%',
+				repeat:'15%'
+			}],
+			map: map
+		});
+
+		console.log(bounds.getCenter());
 		map.fitBounds(bounds);
 		map.panToBounds(bounds);
-		
+
 		var listener = google.maps.event.addListener(map, "idle", function () {
 			google.maps.event.removeListener(listener);
 		});
+		
+		marker.setPosition(bounds.getCenter());
+		map.setCenter(bounds.getCenter());
 	}
 }
 
 //位置情報成功時のコールバック
 function successCallback(event) {
 
+	console.log("successCallback: " + geoLocations);
 	// 緯度
 	latitude = event.coords.latitude;
 	// $('#latitude').html('<span>緯度:'+latitude+'</span>');
@@ -227,15 +232,15 @@ function successCallback(event) {
 	// date = new Date(date);
 	// }
 	// $('#timestamp').html( date.toString());
-	
+
 	var latLng =new google.maps.LatLng(latitude, longitude);
-	
+
 	var options = {
 			zoom: 15,
 			center:latLng,
 			mapTypeId: google.maps.MapTypeId.ROADMAP
 	};
-	
+
 	map = new google.maps.Map($("#map").get(0), options);
 
 	var marker = new google.maps.Marker({
@@ -254,13 +259,12 @@ function successCallback(event) {
 //画面初期化時
 $('#geoLocationIndex').bind('pageinit', function() {
 
-	//console.log("geoLocations: " + geoLocations);
-
+	console.log("geoLocations: " + geoLocations);
 
 	if(geoLocations != ''){
-		//displayTrackOnMap(geoLocations);
+		//今のところここでは何もしない。
 	}else{
-		
+
 		$("#RecordLocation").bind("click", function(){
 			if( watch_id > 0 ) {
 
@@ -297,16 +301,13 @@ $('#geoLocationIndex').bind('pageinit', function() {
 //画面表示時
 $('#geoLocationIndex').bind('pageshow',   function() {
 
-	//console.log("pageshow");
-	
+	console.log("pageshow");
+
 	if(geoLocations != ''){
 		$("#RecordLocation").parent().hide();
 	}else{
 		$("#RecordLocation").parent().show();
 	}
-
-	//initLocation();
-
 });
 
 </script>

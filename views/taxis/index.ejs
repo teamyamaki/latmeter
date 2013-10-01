@@ -75,8 +75,6 @@
                         chart.draw(data, options);
                     }
                 </script>
-
-                <a href="/geoLocation?ridingId=dummy" data-role="button" data-transition="slide">経路表示テスト</a>
                 <div id="chart_div" style="margin: 10px 0;"></div>
                 <div class="ui-grid-d">
                     <div class="ui-block-a">乗車日時</div>
@@ -102,8 +100,10 @@
                       </div>
                       <div class="ui-block-e">
                         <% if (doc.hasRoute) { %>
-                          <a href="/geoLocation?ridingId=<%= doc.ridingId %>">地図</a>
-                          <% } %>
+                          <a href="/geoLocation?ridingId=<%= doc.ridingId %>" data-transition="slide">地図</a>
+                          <% }else{ %>
+                          <a href="/geoLocation?ridingId=dummy" data-transition="slide">ダミー</a>
+                          <%  } %>
                       </div>
                     <% }) %>
                 </div>
