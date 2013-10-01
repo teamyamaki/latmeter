@@ -3,8 +3,6 @@ require('../models/geoLocation');
 exports.index = function(req, res) {
   var ridingId = req.query.ridingId;
   
-  ridingId = "dummy";
-  
   if (ridingId) {
     GeoLocation.findByRidingId(ridingId, function(geoLocations) {
       console.log("経路情報： " + geoLocations.length + "件");

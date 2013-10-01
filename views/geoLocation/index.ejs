@@ -88,7 +88,7 @@ function createRidingId(latitude,longitude)
 function initLocation(){
 
 	if(geoLocations != ''){
-		console.log("geoLocations.length:" + geoLocations.length);
+		//console.log("geoLocations.length:" + geoLocations.length);
 		displayTrackOnMap(geoLocations);
 	}else{
 	ridingId = "";
@@ -133,8 +133,8 @@ function errorCallback(error) {
 }
 
 function addMarker(geoloc) {
-	console.log("latitude : " + geoloc.latitude);
-	console.log("longitude : " + geoloc.longitude);
+	//console.log("latitude : " + geoloc.latitude);
+	//console.log("longitude : " + geoloc.longitude);
 
 	marker = new google.maps.Marker({
 		position: new google.maps.LatLng(geoloc.latitude, geoloc.longitude),
@@ -146,12 +146,15 @@ function addMarker(geoloc) {
 	// extend the bounds to include each marker's position
 	bounds.extend(marker.position);
 
-//	google.maps.event.addListener(marker, 'click', (function(marker, i) {
-//	return function() {
-//	infowindow.setContent(locations[i].latitude);
-//	infowindow.open(map, marker);
-//	}
-//	})(marker, i));
+	var infowindow = new google.maps.InfoWindow({
+	});
+	
+	google.maps.event.addListener(marker, 'click', (function(marker, i) {
+	return function() {
+	infowindow.setContent('<span>'+geoloc.latitude.toString() + '</span>');
+	infowindow.open(map, marker);
+	}
+	})(marker, i));
 	}
 
 function displayTrackOnMap(geoLocs){
@@ -251,7 +254,7 @@ function successCallback(event) {
 //画面初期化時
 $('#geoLocationIndex').bind('pageinit', function() {
 
-	console.log("geoLocations: " + geoLocations);
+	//console.log("geoLocations: " + geoLocations);
 
 
 	if(geoLocations != ''){
@@ -294,7 +297,7 @@ $('#geoLocationIndex').bind('pageinit', function() {
 //画面表示時
 $('#geoLocationIndex').bind('pageshow',   function() {
 
-	console.log("pageshow");
+	//console.log("pageshow");
 	
 	if(geoLocations != ''){
 		$("#RecordLocation").parent().hide();
@@ -302,7 +305,7 @@ $('#geoLocationIndex').bind('pageshow',   function() {
 		$("#RecordLocation").parent().show();
 	}
 
-	initLocation();
+	//initLocation();
 
 });
 
