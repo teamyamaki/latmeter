@@ -95,15 +95,16 @@ function goTaxiReview(){
 }
 
 //位置情報をサーバに送信（計測中のみ）
-function sendGeoLocation()
-{
-	$.post("/geoLocation", 
-			{ latitude: latitude, 
-			longitude: longitude,
-			ridingId: ridingId
-			},
-			function() {}
-	);
+function sendGeoLocation() {
+  console.log(latitude + ' ' + longitude);
+
+  var params = {
+    latitude: latitude,
+    longitude: longitude,
+    ridingId: ridingId
+  };
+
+	$.post("/geoLocation", params);
 }
 
 //位置情報取得失敗時のコールバック

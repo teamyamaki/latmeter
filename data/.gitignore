@@ -2,3 +2,4 @@
 /journal
 /latmeter.*
 /mongod.lock
+/local.*

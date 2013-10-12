@@ -64,14 +64,12 @@ exports.index = function(req, res) {
 };
 
 exports.create = function(req, res) {
+	console.log("Posted geoLocation: " + req.body.latitude + ' ' + req.body.longitude);
 
-	console.log("Posted geoLocation: " + req.body);
-
-	geoLocation = new GeoLocation(req.body);
-
+	var geoLocation = new GeoLocation(req.body);
 	geoLocation.createdAt = new Date();
 	geoLocation.save(function() {
-		res.redirect('/');
+		res.send("OK", 200);
 	});
 };
 
@@ -81,7 +79,7 @@ exports.mp = function(req, res) {
 	for (key in req.query) {
 		console.log(key + ":" + req.query[key]);
 	}
-//	geoLocation = new GeoLocation(req.query);
+
 	GeoLocation.findByRidingId(req.query, function(docs) {
 		// 位置情報のリストが返却されるはず
 		// TODO

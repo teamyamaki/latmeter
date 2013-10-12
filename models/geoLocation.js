@@ -2,13 +2,10 @@ require('../config/database.js');
 	
 // ロケーションを生成
 GeoLocation = function(params) {
-    console.log("=■======:GeoLocation constructor" + " start");
-	
-  	// ロケーションにプロパティを設定
-  	this.latitude  = params.latitude || 35.6480801;
-  	this.longitude = params.longitude || 139.7416143;
-  	this.ridingId  = params.ridingId;
-  	this.createdAt = params.createdAt;
+  this.ridingId  = params.ridingId;
+  this.latitude  = params.latitude;
+  this.longitude = params.longitude;
+  this.createdAt = params.createdAt;
 };
 
 GeoLocation.find = function(callback) {
@@ -23,13 +20,10 @@ GeoLocation.find = function(callback) {
 };
 
 GeoLocation.prototype.save = function(callback) {
-    console.log("=■======:GeoLocation.save" + " start");
-
   var $this = this;
   
-  GeoLocation.getLocationName(function(locationName) {
+  GeoLocation.getLocationName($this.latitude, $this.longitude, function(locationName) {
     $this.locationName = locationName;
-
 
     require('mongodb').connect(DATABASE_URL, function(err, db) {
       db.collection('geoLocations').insert($this, function(err, docs) {
@@ -43,21 +37,21 @@ GeoLocation.prototype.save = function(callback) {
 
 };
 
-GeoLocation.getLocationName = function(callback) {
-    var geocoder = require('geocoder');
+GeoLocation.getLocationName = function(latitude, longitude, callback) {
+  var geocoder = require('geocoder');
+
   // 逆ジオコーディング(座標から住所を得る)
-  geocoder.reverseGeocode(35.6480801, 139.7416143, function ( err, data ) {
+  geocoder.reverseGeocode(latitude, longitude, function (err, data) {
     // アドレス情報の先頭だけしゅとく
-      var address_components = data.results;
-      console.log("■１ = " + address_components);
+    var address_components = data.results;
     var address_component = address_components[0];  
-      console.log("■２" + address_component);
-      var name = address_component.formatted_address;
-      console.log("■３" + name);
-      
-      if (callback) {
-        callback(name);
-      }
+    var name = address_component.formatted_address;
+    
+    console.log(latitude + ' ' + longitude + ' => ' + name);
+    
+    if (callback) {
+      callback(name);
+    }
   });
 };
 
