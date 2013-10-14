@@ -23,17 +23,12 @@ exports.add = function(req, res) {
 exports.create = function(req, res) {
 
   if (req.body.latitude && req.body.longitude) {
-    console.log('位置情報を保存');
-
     var geoLocation = new GeoLocation(req.body);
     geoLocation.createdAt = new Date();
     geoLocation.save(function() {
       var taxi = new Taxi(req.body);
-      GeoLocation.findByRidingId(taxi.ridingId, function(geoLocations) {
-        taxi.hasRoute = geoLocations.length > 2;
-        taxi.save(function() {
-          res.redirect('/');
-        });
+      taxi.save(function() {
+        res.redirect('/');
       });
     });
   } else {

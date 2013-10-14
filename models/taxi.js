@@ -6,7 +6,13 @@ Taxi = function(params) {
   this.rating = params.rating;
   this.ridingId = params.ridingId;
   this.createdAt = params.createdAt;
-  this.hasRoute = params.hasRoute;
+  if (params.geoLocations) {
+    this.geoLocations = params.geoLocations;
+  } else {
+    this.geoLocations = [];
+  }
+
+  console.log(this.geoLocations[0]);
 };
 
 Taxi.find = function(options, callback) {
@@ -19,14 +25,14 @@ Taxi.find = function(options, callback) {
     } else {
        query.rating = {$ne: null};
     }
-    
+
     var query_options = {
       'sort': {'createdAt': -1}
     };
 
     db.collection('taxis').find(query, query_options).toArray(function(err, docs) {
       var taxis = [];
-      
+
       for (var i = 0; i < docs.length; i ++) {
         taxis[i] = new Taxi(docs[i]);
       }
@@ -42,7 +48,7 @@ Taxi.prototype.save = function(callback) {
 
   if ($this.ridingId) {
     GeoLocation.findByRidingId($this.ridingId, function(geoLocations) {
-      $this.hasRoute = geoLocations.length >= 2;
+      $this.geoLocations = geoLocations;
 
       require('mongodb').connect(DATABASE_URL, function(err, db) {
         db.collection('taxis').insert($this, function(err, docs) {
@@ -59,6 +65,14 @@ Taxi.prototype.save = function(callback) {
       });
     });
   }
+};
+
+Taxi.prototype.hasRoute = function() {
+  if (this.geoLocations.length >= 2) {
+    return this.geoLocations[0].locationName && this.geoLocations[this.geoLocations.length -1].locationName;
+  }
+
+  return false;
 };
 
 Taxi.prototype.createdAtString = function(defaultValue) {
