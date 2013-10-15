@@ -76,28 +76,34 @@
                     }
                 </script>
                 <div id="chart_div" style="margin: 10px 0;"></div>
-                <div class="ui-grid-b">
+                <div class="ui-grid-c">
                     <div class="ui-block-a">日時・場所</div>
-                    <div class="ui-block-b">色・タイプ</div>
-                    <div class="ui-block-c">評価</div>
+                    <div class="ui-block-b">色</div>
+                    <div class="ui-block-c">タイプ</div>
+                    <div class="ui-block-d">評価</div>
 
                     <% taxis.forEach(function(doc){ %>
                       <div class="ui-block-a">
                         <%= doc.createdAtString('不明') %>
-                        <% if (doc.hasRoute()) { %>
-                          <a href="/geoLocation?ridingId=<%= doc.ridingId %>" data-transition="slide">
-                            <div>乗車： <%= doc.geoLocations[0].locationName %></div>
-                            <div>降車： <%= doc.geoLocations[doc.geoLocations.length - 1].locationName %></div>
-                          </a>
-                        <% } %>
                       </div>
                       <div class="ui-block-b">
-                        <%= doc.colorName() %>　<%= doc.companyTypeName() %>
+                        <%= doc.colorName() %>
                       </div>
                       <div class="ui-block-c">
+                        <%= doc.companyTypeName() %>
+                      </div>
+                      <div class="ui-block-d">
                           <% for (var i = 0; i < doc.rating; i ++) { %>
                               <img src="/images/stars.png" style="width: 16px; height: 16px;"/>
                               <% } %>
+                      </div>
+                      <div class="ui-block-a" style="width: 100%;">
+                        <span style="margin-left: 20px;"></span>
+                        <% if (doc.hasRoute()) { %>
+                          <a href="/geoLocation?ridingId=<%= doc.ridingId %>" data-transition="slide">
+                            <%= doc.from() %> ～ <%= doc.to() %>
+                          </a>
+                        <% } %>
                       </div>
                     <% }) %>
                 </div>

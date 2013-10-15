@@ -75,6 +75,14 @@ Taxi.prototype.hasRoute = function() {
   return false;
 };
 
+Taxi.prototype.from = function() {
+  return this.geoLocations[0].locationName;
+};
+
+Taxi.prototype.to = function() {
+  return this.geoLocations[this.geoLocations.length - 1].locationName
+};
+
 Taxi.prototype.createdAtString = function(defaultValue) {
   if (this.createdAt) {
     var strftime = require('strftime');
