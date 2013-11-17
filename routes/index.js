@@ -1,8 +1,5 @@
-
-/*
- * GET home page.
- */
-
 exports.index = function(req, res){
-  res.render('index', { title: 'jQuery Mobile' });
+  Taxi.find({rating: '5'}, function(docs) {
+    res.render('index', { goodTaxis: docs });
+  });
 };

@@ -1,81 +1,15 @@
 <!DOCTYPE html>
 <html lang="ja">
     <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>タクシー評価結果</title>
         <% include ../common/_head.ejs %>
     </head>
     <body>
-        <div id="taxis_page" data-role="page" data-url="/taxi">
+        <div data-role="page" data-url="/taxi">
             <div data-role="header" data-position="fixed">
                 <h1>結果</h1>
             </div>
             <div data-role="content">
-                <script>
-                    $('#taxis_page').on('pageshow', function() {
-                      drawChart();
-                    });
-
-                    function drawChart() {
-                        var black = ['黒', 0];
-                        var white = ['白', 0];
-                        var yellow = ['黄色', 0];
-                        var orange = ['オレンジ', 0];
-                        var etc = ['その他', 0];
-                        <% goodTaxis.forEach(function(doc) { %>
-                            <% if (doc.color == 'black' ) { %>
-                                black[1]++;
-                            <% } else if(doc.color == 'white') { %>
-                                white[1]++;
-                            <% } else if (doc.color == 'yellow') { %>
-                                yellow[1]++;
-                            <% } else if (doc.color == 'orange') { %>
-                                orange[1]++;
-                            <% } else { %>
-                                etc[1]++;
-                            <% } %>
-                        <% }) %>
-        
-                        // Create the data table.
-                        var data = new google.visualization.DataTable();
-                        data.addColumn('string', 'Topping');
-                        data.addColumn('number', 'Slices');
-                        data.addRows([
-                        black,
-                        white,
-                        yellow,
-                        orange,
-                        etc,
-                        ]);
-        
-                        // Set chart options
-                        var options = {
-                            'title' : '評価が高いタクシーの色',
-                            'width' : 320,
-                            'height' : 240,
-                            'slices' : {
-                                0 : {
-                                    color : 'black'
-                                },
-                                1 : {
-                                    color : 'white'
-                                },
-                                2 : {
-                                    color : 'yellow'
-                                },
-                                3 : {
-                                    color : 'orange'
-                                },
-                            }
-                        };
-        
-                        // Instantiate and draw our chart, passing in some options.
-                        var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-                        chart.draw(data, options);
-                    }
-                </script>
-                <div id="chart_div" style="margin: 10px 0;"></div>
                 <div class="ui-grid-c">
                     <div class="ui-block-a">日時・場所</div>
                     <div class="ui-block-b">色</div>
